@@ -1,47 +1,47 @@
-import { useState, useContext, forwardRef } from "react";
+import { useState, useContext, useEffect } from "react";
+// import { NavLink } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import { Context } from "../../context";
+import { useParams } from "react-router-dom";
+import { Rating, Typography } from "@mui/material";
+import { Stack } from "@mui/system";
 
 const initialize = {
   id: "",
   name: "",
   address: "",
   hotelPhone: "",
-  stars: 0.0,
+  stars: parseFloat(0),
   location: 0,
 };
 
-const AddHotel = () => {
-  const { _, dispatch } = useContext(Context);
-  const [state, setState] = useState(initialize);
+const UpdateHotel = () => {
+  const { id } = useParams();
+  const { state, dispatch } = useContext(Context);
+  const [hotel, setHotel] = useState(initialize);
+  useEffect(() => {
+    const hotelId = id;
+    const selectedHotel = state.hotels.find(
+      (hotel) => hotel.id === parseInt(hotelId)
+    );
+    setHotel(selectedHotel);
+  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-
-    setState({ ...state, [name]: value });
+    setHotel({ ...hotel, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { name, address, hotelPhone, stars } = state;
-    console.log(stars);
-    const newHotel = {
-      name,
-      address,
-      hotelPhone,
-      stars: parseFloat(stars),
-    };
-    dispatch({ type: "ADD_HOTEL", payload: newHotel });
-    console.log("Hotel : ", newHotel);
-    setState(initialize);
+    dispatch({ type: "UPDATE_HOTEL", payload: hotel });
+    console.log("HOTEL : ", hotel);
+    setHotel(initialize);
   };
 
-  const { name, address, hotelPhone, stars } = state;
+  const { name, address, hotelPhone, stars } = hotel;
   return (
     <Box
       component="form"
@@ -51,36 +51,36 @@ const AddHotel = () => {
         flexDirection: "column",
         alignItems: "center",
       }}
+      onSubmit={handleSubmit}
       noValidate
       autoComplete="off"
       spacing={2}
-      onSubmit={handleSubmit}
     >
       <TextField
         id="outlined-basic"
-        label="Name..."
+        label="Fullname..."
         variant="outlined"
         name="name"
+        onChange={handleInputChange}
         value={name}
-        onChange={handleInputChange}
-        required
-      />
-      <TextField
-        id="outlined-basic"
-        label="Address.."
-        variant="outlined"
-        name="address"
-        value={address}
-        onChange={handleInputChange}
         required
       />
       <TextField
         id="standard-basic"
-        label="Phone"
+        label="Address..."
+        variant="outlined"
+        name="address"
+        onChange={handleInputChange}
+        value={address}
+        required
+      />
+      <TextField
+        id="outlined-basic"
+        label="Phone..."
         variant="outlined"
         name="hotelPhone"
-        value={hotelPhone}
         onChange={handleInputChange}
+        value={hotelPhone}
         required
       />
       <Stack
@@ -105,11 +105,16 @@ const AddHotel = () => {
           required
         />
       </Stack>
-      <Button type="submit" variant="contained">
-        Add Hotel
+      <Button
+        type="submit"
+        variant="contained"
+        // component={NavLink}
+        // to="/hotels"
+      >
+        Update Manager
       </Button>
     </Box>
   );
 };
 
-export default AddHotel;
+export default UpdateHotel;

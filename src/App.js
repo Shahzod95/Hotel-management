@@ -1,27 +1,34 @@
-import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
-import Auth from './pages/Auth';
-import menuItems from "./utils/menu-items";
+import Auth from "./pages/Auth";
+import Hotels from "./pages/Hotels";
+import Managers from "./pages/Managers";
+import PageNotFound from "./pages/PageNotFound";
+import AddHotel from "./pages/AddHotel";
+import AddManager from "./pages/AddManager";
+import UpdateManager from "./pages/UpdateManager";
+import UpdateHotel from "./pages/UpdateHotel";
+
 function App() {
-  const [user, setUser] = useState({
-    username:'admin',
-    password:'12345'
-  })
+  const getUsername = localStorage.getItem("usernameData");
+  const getPassword = localStorage.getItem("password");
   return (
     <Routes>
-      { user ? <Route path="/sign-in" element={ <Auth user={user} /> } />:
+      {getUsername && getPassword ? (
         <Route element={<Sidebar />}>
-          {
-            menuItems.map(({path, element, id }) =>{
-              return <Route key={id} path={path} element={element} />
-            } )
-          }
-        </Route> 
-        
-      }
+          <Route path="hotels" element={<Hotels />} />
+          <Route path="add-hotel" element={<AddHotel />} />
+          <Route path="update-hotel/:id" element={<UpdateHotel />} />
+          <Route path="managers" element={<Managers />} />
+          <Route path="add-manager" element={<AddManager />} />
+          <Route path="update-manager/:id" element={<UpdateManager />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
+      ) : (
+        <Route path="/sign-in" element={<Auth />} />
+      )}
     </Routes>
-  )
+  );
 }
 
 export default App;

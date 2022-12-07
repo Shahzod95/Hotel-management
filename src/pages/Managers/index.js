@@ -9,7 +9,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Rating from "@mui/material/Rating";
 import EditIcon from "@mui/icons-material/Edit";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -17,14 +16,7 @@ import { Context } from "../../context";
 
 const columns = [
   { id: "ID", label: "ID", minWidth: 170 },
-  { id: "name", label: "Name", minWidth: 100 },
-  {
-    id: "address",
-    label: "Address",
-    minWidth: 170,
-    align: "center",
-    format: (value) => value.toLocaleString("en-US"),
-  },
+  { id: "name", label: "Fullname", minWidth: 100 },
   {
     id: "phone",
     label: "Phone",
@@ -33,8 +25,15 @@ const columns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "stars",
-    label: "Stars",
+    id: "password",
+    label: "Password",
+    minWidth: 170,
+    align: "center",
+    format: (value) => value.toFixed(2),
+  },
+  {
+    id: "hotel_id",
+    label: "Hotel ID",
     minWidth: 170,
     align: "center",
     format: (value) => value.toFixed(2),
@@ -55,8 +54,9 @@ const columns = [
   },
 ];
 
-const Hotels = () => {
+const Managers = () => {
   const { state, dispatch } = useContext(Context);
+  // const [state, setState] = useState(managers)
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -69,10 +69,14 @@ const Hotels = () => {
     setPage(0);
   };
 
+  // const addManager = (managerItem) => {
+  //     managerItem.id = state.length + 1
+  //     setState([...state, managerItem])
+  // }
   const remove = (id) => {
-    dispatch({ type: "DELETE_HOTEL", payload: id });
+    dispatch({ type: "DELETE_MANAGER", payload: id });
   };
-  const { hotels } = state;
+  const { managers } = state;
   return (
     <Grid item xs={12} md={4} lg={3}>
       <Paper
@@ -81,14 +85,14 @@ const Hotels = () => {
           display: "flex",
           flexDirection: "column",
           height: 500,
-          overflow: "auto",
         }}
+        spacing={3}
       >
-        <Button variant="contained" component={NavLink} to="/add-hotel">
-          Add Hotel
+        <Button variant="contained" component={NavLink} to="/add-manager">
+          Add Manager
         </Button>
-        <TableContainer sx={{ maxHeight: 440 }} size="small">
-          <Table stickyHeader aria-label="sticky table" size="small">
+        <TableContainer sx={{ maxHeight: 440 }}>
+          <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
@@ -103,7 +107,7 @@ const Hotels = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {hotels
+              {managers
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
                   return (
@@ -116,23 +120,15 @@ const Hotels = () => {
                     >
                       <>
                         <TableCell align="center">{row.id}</TableCell>
-                        <TableCell align="center">{row.name}</TableCell>
-                        <TableCell align="center">{row.address}</TableCell>
-                        <TableCell align="center">{row.hotelPhone}</TableCell>
-                        <TableCell align="center">
-                          <Rating
-                            name="half-rating"
-                            defaultValue={row.stars}
-                            precision={0.5}
-                            size="large"
-                            readOnly
-                          />
-                        </TableCell>
+                        <TableCell align="center">{row.fullname}</TableCell>
+                        <TableCell align="center">{row.phone}</TableCell>
+                        <TableCell align="center">{row.password}</TableCell>
+                        <TableCell align="center">{row.hotel_id}</TableCell>
                         <TableCell align="center">
                           <Button
                             variant="contained"
                             component={NavLink}
-                            to={`/update-hotel/${row.id}`}
+                            to={`/add-manager/${row.id}`}
                           >
                             <EditIcon />
                           </Button>
@@ -158,7 +154,7 @@ const Hotels = () => {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={hotels.length}
+          count={managers.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -169,4 +165,4 @@ const Hotels = () => {
   );
 };
 
-export default Hotels;
+export default Managers;

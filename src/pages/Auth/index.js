@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,26 +12,28 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import Managers from '../Managers'
 
 const theme = createTheme();
 
 export default function SignIn() {
-
     const [user, setUser] = useState({
-        username:'admin',
-        password:'12345'
-      })
-    console.log("Username", user.username)
-    console.log("Password", user.password)
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+      username:'',
+      password:'',
+    })
+
+    const handleChange = (e) => {
+      const {name, value} = e.target
+      console.log(user)
+      setUser((prevState) => ({...prevState, [name]:value}))
+    }
+    const handleSubmit = () => {
+      const {username, password} = user
+      if(username ==='hotelmanager' && password === 'hotelmanager'){
+        localStorage.setItem('usernameData','hotelmanager')
+        localStorage.setItem('password','hotelmanager')
+      }
+    }
 
   return (
     <ThemeProvider theme={theme}>
@@ -60,6 +62,7 @@ export default function SignIn() {
               label="Username"
               name="username"
               autoComplete="username"
+              onChange={handleChange}
               autoFocus
             />
             <TextField
@@ -70,6 +73,7 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
+              onChange={handleChange}
               autoComplete="current-password"
             />
             <FormControlLabel
