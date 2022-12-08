@@ -7,6 +7,7 @@ import { Context } from "../../context";
 const initialize = {
   id: "",
   fullname: "",
+  username: "",
   phone: "",
   password: "",
 };
@@ -22,9 +23,10 @@ const AddManager = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { fullname, phone, password } = state;
+    const { fullname, username, phone, password } = state;
     const newManager = {
       fullname,
+      username,
       phone,
       password,
     };
@@ -32,7 +34,7 @@ const AddManager = () => {
     setState(initialize);
   };
 
-  const { fullname, phone, password } = state;
+  const { fullname, username, phone, password } = state;
   return (
     <Box
       component="form"
@@ -54,6 +56,14 @@ const AddManager = () => {
         name="fullname"
         onChange={handleInputChange}
         value={fullname}
+      />
+      <TextField
+        id="outlined-basic"
+        label="Username..."
+        variant="outlined"
+        name="username"
+        onChange={handleInputChange}
+        value={username}
       />
       <TextField
         id="standard-basic"

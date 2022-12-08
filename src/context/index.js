@@ -6,6 +6,7 @@ const initialValue = {
     {
       id: 1,
       fullname: "Kimsanov Kimsan Kimsanovich",
+      username: "kimsan1",
       phone: "+99891111111",
       password: "12345",
       hotel_id: 1,
@@ -13,6 +14,7 @@ const initialValue = {
     {
       id: 2,
       fullname: "MKimsanov Kimsan Kimsanovich",
+      username: "kimsan2",
       phone: "+99891111111",
       password: "12345",
       hotel_id: 2,
@@ -20,6 +22,7 @@ const initialValue = {
     {
       id: 3,
       fullname: "MKimsanov Kimsan Kimsanovich",
+      username: "kimsan3",
       phone: "+99891111111",
       password: "12345",
       hotel_id: 3,
@@ -27,6 +30,7 @@ const initialValue = {
     {
       id: 4,
       fullname: "MKimsanov Kimsan Kimsanovich",
+      username: "kimsan4",
       phone: "+99891111111",
       password: "12345",
       hotel_id: 4,
@@ -34,6 +38,7 @@ const initialValue = {
     {
       id: 5,
       fullname: "MKimsanov Kimsan Kimsanovich",
+      username: "kimsan5",
       phone: "+99891111111",
       password: "12345",
       hotel_id: 5,
@@ -89,11 +94,12 @@ const reducer = (state = initialValue, action) => {
   const { type, payload } = action;
   switch (type) {
     case "ADD_MANAGER":
-      const { fullname, phone, password } = payload;
+      const { fullname, username, phone, password } = payload;
       const id = state.managers.length + 1;
       const newManager = {
         id,
         fullname,
+        username,
         phone,
         password,
       };

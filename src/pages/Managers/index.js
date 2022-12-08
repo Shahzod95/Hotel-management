@@ -128,7 +128,7 @@ const Managers = () => {
                           <Button
                             variant="contained"
                             component={NavLink}
-                            to={`/add-manager/${row.id}`}
+                            to={`/update-manager/${row.id}`}
                           >
                             <EditIcon />
                           </Button>

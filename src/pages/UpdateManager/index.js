@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 const initialize = {
   id: "",
   fullname: "",
+  username: "",
   phone: "",
   password: "",
   hotel_id: 0,
@@ -37,7 +38,7 @@ const UpdateManager = () => {
     setManager(initialize);
   };
 
-  const { fullname, phone, password, hotel_id } = manager;
+  const { fullname, username, phone, password, hotel_id } = manager;
   return (
     <Box
       component="form"
@@ -59,6 +60,14 @@ const UpdateManager = () => {
         name="fullname"
         onChange={handleInputChange}
         value={fullname}
+      />
+      <TextField
+        id="outlined-basic"
+        label="Username..."
+        variant="outlined"
+        name="username"
+        onChange={handleInputChange}
+        value={username}
       />
       <TextField
         id="standard-basic"
