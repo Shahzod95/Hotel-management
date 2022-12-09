@@ -24,15 +24,14 @@ function App() {
           path="/manager"
           element={<ManagerPage managerObj={managerObj} />}
         />
-        <Route path="*" element={<PageNotFound />} />
       </Routes>
     );
   }
 
-  return (
-    <Routes>
-      <Route index element={<Home />} />
-      {getUsername && getPassword ? (
+  if (getUsername && getPassword) {
+    return (
+      <Routes>
+        <Route index element={<Home />} />
         <Route path="/" element={<Sidebar />}>
           <Route path="hotels" element={<Hotels />} />
           <Route path="add-hotel" element={<AddHotel />} />
@@ -42,9 +41,12 @@ function App() {
           <Route path="update-manager/:id" element={<UpdateManager />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
-      ) : (
-        <Route path="/sign-in" element={<Auth />} />
-      )}
+      </Routes>
+    );
+  }
+  return (
+    <Routes>
+      <Route path="/sign-in" element={<Auth />} />
     </Routes>
   );
 }

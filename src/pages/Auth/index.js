@@ -3,10 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -15,33 +11,33 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Context } from "../../context";
 
 const theme = createTheme();
-
+const initialize = {
+  username: "",
+  password: "",
+};
 export default function SignIn() {
   const { state } = useContext(Context);
-  const [manager, setManager] = useState({});
-  const [user, setUser] = useState({
-    username: "",
-    password: "",
-  });
+  const [manager, setManager] = useState(initialize);
+  const [user, setUser] = useState(initialize);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser((prevState) => ({ ...prevState, [name]: value }));
   };
+  console.log("User: ", user);
 
-  function search(nameKey, passwordKey, myArray) {
-    for (let i = 0; i < state.managers.length; i++) {
-      if (
-        myArray[i].username === nameKey &&
-        myArray[i].password === passwordKey
-      ) {
-        setManager(myArray[i]);
-        return myArray[i];
-      }
+  for (let i = 0; i < state.managers.length; i++) {
+    if (
+      state.managers[i].username === user.username &&
+      state.managers[i].password === user.password
+    ) {
+      // const { username, password } = state.manager[i];
+      // setManager((prevState) => ({ ...prevState, username, password }));
+      console.log(state.managers[i]);
     }
   }
-  const flt = search(manager.username, manager.password, state.managers);
-  console.log(flt);
+
+  console.log(manager);
   // setManager(filterManager[0]);
   // console.log(filterManager[0]);
   const handleSubmit = () => {

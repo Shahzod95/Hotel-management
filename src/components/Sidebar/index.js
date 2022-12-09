@@ -18,6 +18,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import menuItems from "../../utils/menu-items";
 import { NavLink, Outlet } from "react-router-dom";
+import Logout from "../Logout";
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -117,6 +119,7 @@ export default function Sidebar() {
           <Typography variant="h6" noWrap component="div">
             Hotel Management
           </Typography>
+          <Logout placement="right-end" />
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
